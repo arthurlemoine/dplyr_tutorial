@@ -2,8 +2,5 @@
 
 ## Section 1
 
-We'll see if it works
+I finally managed to get it to stop asking for my keychain password everytime 
 
-It didn't let's try again 
-
-Another try
