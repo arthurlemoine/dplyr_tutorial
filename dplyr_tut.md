@@ -9,10 +9,6 @@ execute:
 ---
 
 
-
-### Loading libraries and dataset
-
-
 ::: {.cell}
 
 :::

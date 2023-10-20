@@ -8,8 +8,6 @@ execute:
   keep-md: true
 ---
 
-### Loading libraries and dataset
-
 ```{r}
 library(here)
 library(dplyr)
