@@ -1,0 +1,101 @@
+---
+title: "Dplyr tutorial"
+format: html
+editor: visual
+---
+
+
+### Loading libraries and dataset
+
+
+```{r}
+library(here)
+library(dplyr)
+library(tidyr)
+library(knitr)
+library(ggplot2)
+here::i_am("dplyrtuto.Rproj")
+raw_spotify <- readRDS('top-spotify-hits-2000-2019.Rds')
+```
+
+
+## Exercise 1
+
+### Question 1
+
+
+```{r}
+spotify <- raw_spotify |> distinct(song, artist, .keep_all = TRUE)
+```
+
+
+The dataset contains:  
+- `r n_distinct(spotify$song, spotify$artist)` different songs (`r n_distinct(spotify$song)` different titles)  
+- `r n_distinct(spotify$artist)` different artists  
+- `r n_distinct(spotify$genre)` different genres.  
+
+### Question 2
+
+
+```{r}
+artists_per_year <- spotify |>
+  group_by(year) |>
+  summarise('Nb artists' = n_distinct(artist))
+
+kable(artists_per_year, format = "markdown")
+```
+
+
+### Question 3
+
+
+```{r}
+most_popular_artist <- spotify |>
+  group_by(artist) |>
+  summarise(NumSongs = n()) |>
+  slice_max(order_by = NumSongs)
+```
+
+
+The most popular artist is `r most_popular_artist$artist` with `r most_popular_artist$NumSongs` songs.
+
+### Question 4
+
+
+```{r}
+tempo_sum <- spotify |>
+  group_by(genre) |>
+  summarise('min'=min(tempo), 
+            'max'=max(tempo), 
+            'mean'=mean(tempo),
+            'median'=median(tempo),
+            'number'=n())
+
+kable(tempo_sum, format = "markdown", digits = 1, align = "lccccc")
+```
+
+
+### Question 5
+
+```{r}
+live_n_dance <- spotify |>
+  group_by(year) |>
+  summarise(Mean_live = mean(liveness), Mean_dance = mean(danceability))
+
+kable(live_n_dance, format = "markdown", digits = 3)
+```
+
+
+### Question 6
+
+
+```{r}
+graph <- live_n_dance |>
+  gather(key = variable, value = value, Mean_live, Mean_dance)
+
+ggplot(graph, aes(x=year, y = value))+
+  geom_line(aes(color=variable)) +
+  scale_color_manual(values = c("darkred", "darkblue")) +
+  theme(legend.position="bottom")
+```
+
