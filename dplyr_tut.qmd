@@ -2,6 +2,10 @@
 title: "Dplyr tutorial"
 format: html
 editor: visual
+execute:
+  echo: false
+  warning: false
+  keep-md: true
 ---
 
 ### Loading libraries and dataset
@@ -12,7 +16,7 @@ library(dplyr)
 library(tidyr)
 library(knitr)
 library(ggplot2)
-here::i_am("dplyrtuto.Rproj")
+here::i_am("gitdplyr.Rproj")
 raw_spotify <- readRDS('top-spotify-hits-2000-2019.Rds')
 ```
 
@@ -27,7 +31,7 @@ spotify <- raw_spotify |> distinct(song, artist, .keep_all = TRUE)
 The dataset contains:  
 - `r n_distinct(spotify$song, spotify$artist)` different songs (`r n_distinct(spotify$song)` different titles)  
 - `r n_distinct(spotify$artist)` different artists  
-- `r n_distinct(spotify$genre)` different genres.  
+- `r n_distinct(spotify$genre)` different genres.
 
 ### Question 2
 
@@ -64,8 +68,8 @@ tempo_sum <- spotify |>
 kable(tempo_sum, format = "markdown", digits = 1, align = "lccccc")
 ```
 
-
 ### Question 5
+
 ```{r}
 live_n_dance <- spotify |>
   group_by(year) |>
@@ -82,7 +86,8 @@ graph <- live_n_dance |>
 
 ggplot(graph, aes(x=year, y = val1))+
   geom_line(aes(color=var1)) +
-  scale_color_manual(values = c("darkred", "darkblue")) +
+  scale_color_manual(values = c("darkred", "darkblue"), name = 'Variables', labels = c('Mean danceability', 'Mean liveness')) +
+  labs(x= 'Year', y= '') +
   theme(legend.position="bottom")
 ```
 
@@ -92,13 +97,14 @@ ggplot(graph, aes(x=year, y = val1))+
 dropout <- readRDS('dropout.Rds')
 ```
 
-
 ### Question 1
 
 ```{r}
 adminGrade <- dropout |>
   group_by(Target, `Marital status`) |>
   summarise(medianAG = median(`Admission grade`))
+
+kable(adminGrade, format = "markdown")
 ```
 
 ### Question 2
@@ -116,6 +122,8 @@ kable(adminGradeTable, format = "markdown", digits = 2, align = "lccc")
 medianCU <- dropout |>
   group_by(Gender) |>
   summarise(across(starts_with("Curricular"), median))
+
+kable(medianCU, format = "markdown")
 ```
 
 ### Question 4
