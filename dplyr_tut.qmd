@@ -26,9 +26,9 @@ raw_spotify <- readRDS('top-spotify-hits-2000-2019.Rds')
 spotify <- raw_spotify |> distinct(song, artist, .keep_all = TRUE)
 ```
 
-The dataset contains:  
-- `r n_distinct(spotify$song, spotify$artist)` different songs (`r n_distinct(spotify$song)` different titles)  
-- `r n_distinct(spotify$artist)` different artists  
+The dataset contains:\
+- `r n_distinct(spotify$song, spotify$artist)` different songs (`r n_distinct(spotify$song)` different titles)\
+- `r n_distinct(spotify$artist)` different artists\
 - `r n_distinct(spotify$genre)` different genres.
 
 ### Question 2
@@ -79,13 +79,14 @@ kable(live_n_dance, format = "markdown", digits = 3)
 ### Question 6
 
 ```{r}
+#| label: fig1-means
 graph <- live_n_dance |>
   gather(key = var1, value = val1, Mean_live, Mean_dance)
 
 ggplot(graph, aes(x=year, y = val1))+
   geom_line(aes(color=var1)) +
-  scale_color_manual(values = c("darkred", "darkblue"), name = 'Variables', labels = c('Mean danceability', 'Mean liveness')) +
-  labs(x= 'Year', y= '') +
+  scale_color_manual(values = c("darkred", "darkblue"), name = 'Variables', labels = c('Danceability', 'Liveness')) +
+  labs(x= 'Year', y= 'Mean') +
   theme(legend.position="bottom")
 ```
 

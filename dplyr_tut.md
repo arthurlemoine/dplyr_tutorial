@@ -24,9 +24,9 @@ execute:
 :::
 
 
-The dataset contains:  
-- 1926 different songs (1879 different titles)  
-- 835 different artists  
+The dataset contains:\
+- 1926 different songs (1879 different titles)\
+- 835 different artists\
 - 59 different genres.
 
 ### Question 2
@@ -182,7 +182,7 @@ The most popular artist is Rihanna with 23 songs.
 
 ::: {.cell}
 ::: {.cell-output-display}
-![](dplyr_tut_files/figure-html/unnamed-chunk-7-1.png){width=672}
+![](dplyr_tut_files/figure-html/fig1-means-1.png){width=672}
 :::
 :::
 
